@@ -26,119 +26,212 @@ const categories = [
 
 function Categories() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const itemsPerView = 10;
+  const [isAnimating, setIsAnimating] = useState(false);
+  
+  const itemsPerView = 10; 
   const maxIndex = Math.ceil(categories.length / itemsPerView) - 1;
 
   const handlePrev = () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
     setCurrentIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
+    setTimeout(() => setIsAnimating(false), 600);
   };
 
   const handleNext = () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
     setCurrentIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
+    setTimeout(() => setIsAnimating(false), 600);
   };
 
   const startIndex = currentIndex * itemsPerView;
   const visibleCategories = categories.slice(startIndex, startIndex + itemsPerView);
 
   return (
-    <div className="min-h-screen py-8 w-full">
-      <div className="max-w-7xl mx-auto px-4">
+    <div className="min-h-screen py-16 w-full bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header with Navigation Buttons */}
-        <div className="flex justify-between items-center mb-16">
-          <div className="text-left">
-            <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-3">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-16 space-y-6 md:space-y-0">
+          <div className="text-center md:text-left">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-3 animate-slide-down">
               Featured Categories
             </h1>
-            <p className="text-xl text-gray-600 font-medium">
-              Discover amazing products with beautiful animations
-            </p>
+            
           </div>
+          
 
-          <div className="flex space-x-4">
+          <div className="flex space-x-4 animate-slide-down-delay-2">
             <button
               onClick={handlePrev}
-              className="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 px-8 py-4 rounded-2xl shadow-2xl hover:shadow-3xl border border-gray-300 transition-all duration-500 hover:scale-110 hover:-translate-y-1 font-bold flex items-center space-x-3 text-2xl"
+              className="bg-white text-gray-700 px-6 py-3 rounded-xl shadow-lg hover:shadow-xl border border-gray-200 transition-all duration-300 hover:bg-gray-50 hover:scale-105 font-semibold flex items-center space-x-2 text-lg group"
             >
-              <span className="hover:scale-25 transition-transform">‹</span>
+              <span className="transition-transform duration-300 group-hover:-translate-x-1">‹</span>
+              <span>Prev</span>
             </button>
             
             <button
               onClick={handleNext}
-              className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-8 py-4 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-110 hover:-translate-y-1 font-bold flex items-center space-x-3 text-2xl"
+              className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:from-purple-600 hover:to-blue-600 hover:scale-105 font-semibold flex items-center space-x-2 text-lg group"
             >
-              <span className="hover:scale-25 transition-transform">›</span>
+              <span>Next</span>
+              <span className="transition-transform duration-300 group-hover:translate-x-1">›</span>
             </button>
           </div>
         </div>
 
-        {/* Category Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
+        {/* Category Cards with Enhanced Animation */}
+        <div className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 transition-all duration-500 ${isAnimating ? 'opacity-50' : 'opacity-100'}`}>
           {visibleCategories.map((category, index) => (
             <div
               key={category.id}
-              className="relative rounded-3xl p-8 shadow-2xl border-2 border-white/50 transition-all duration-700 ease-out cursor-pointer group hover:scale-105 hover:rotate-1 animate-fade-in bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 backdrop-blur-sm"
-              style={{ animationDelay: `${index * 100}ms` }}
+              className="relative rounded-2xl p-6 shadow-lg border border-gray-100 transition-all duration-500 ease-out cursor-pointer group hover:scale-105 bg-white overflow-hidden"
+              style={{
+                animationDelay: `${index * 100}ms`,
+                animationFillMode: 'both'
+              }}
             >
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-purple-400/20 via-pink-400/20 to-blue-400/20 opacity-0 group-hover:opacity-100 transition-all duration-500 blur-sm"></div>
+              {/* Background Gradient on Hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/0 via-pink-500/0 to-blue-500/0 group-hover:from-purple-500/10 group-hover:via-pink-500/10 group-hover:to-blue-500/10 transition-all duration-500 rounded-2xl"></div>
+              
+              {/* Shine Effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
 
               <div className="relative z-10 text-center">
-                <div className="text-7xl mb-6 transition-all duration-700 group-hover:scale-125 group-hover:rotate-12 group-hover:drop-shadow-2xl filter group-hover:brightness-110">
+                {/* Icon with Floating Animation */}
+                <div className="text-6xl mb-4 transition-all duration-500 group-hover:scale-110 group-hover:-translate-y-2 filter drop-shadow-lg">
                   {category.image}
                 </div>
                 
-                <h3 className="text-2xl font-extrabold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-4 transition-all duration-500 group-hover:scale-110 group-hover:tracking-wider">
+                {/* Title with Smooth Transition */}
+                <h3 className="text-lg font-bold text-gray-800 mb-3 transition-all duration-300 group-hover:text-purple-600">
                   {category.name}
                 </h3>
                 
-                {/* Items Count - updated color */}
-                <p className="text-lg font-semibold text-white bg-[#10B981] px-6 py-3 rounded-full shadow-lg transition-all duration-500 group-hover:scale-105 group-hover:shadow-xl">
-                  {category.items} items
-                </p>
-
-                {/* Floating Particles */}
-                <div className="absolute -top-2 -right-2 w-4 h-4 bg-yellow-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping"></div>
-                <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-green-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-pulse"></div>
+                {/* Items Count with Pulse Animation */}
+                <div className="inline-flex items-center justify-center">
+                  <p className="text-sm font-semibold text-white bg-green-500 px-3 py-1 rounded-full shadow-md transition-all duration-300 group-hover:bg-green-600 group-hover:shadow-lg group-hover:scale-105">
+                    {category.items} items
+                  </p>
+                </div>
               </div>
 
-              <div className="absolute inset-0 rounded-3xl border-2 border-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-border opacity-0 group-hover:opacity-100 transition-all duration-500 -z-10">
-                <div className="absolute inset-[2px] rounded-3xl bg-white"></div>
-              </div>
+              {/* Border Animation on Hover */}
+              <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-purple-200 transition-all duration-300"></div>
             </div>
+          ))}
+        </div>
+
+        {/* Dots Indicator */}
+        <div className="flex justify-center mt-12 space-x-3">
+          {Array.from({ length: maxIndex + 1 }).map((_, index) => (
+            <button
+              key={index}
+              onClick={() => {
+                if (!isAnimating) {
+                  setIsAnimating(true);
+                  setCurrentIndex(index);
+                  setTimeout(() => setIsAnimating(false), 600);
+                }
+              }}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                currentIndex === index 
+                  ? 'bg-purple-500 w-8' 
+                  : 'bg-gray-300 hover:bg-gray-400'
+              }`}
+            />
           ))}
         </div>
       </div>
 
-      {/* ❌ Popular Products Section को यहाँ से हटा दिया गया */}
-
-      {/* Custom Animations */}
+      {/* Enhanced Custom Animations */}
       <style jsx>{`
-        @keyframes fade-in {
-          from { 
-            opacity: 0; 
-            transform: translateY(30px) scale(0.9) rotate(-2deg); 
+        /* Slide Down Animation for Header */
+        @keyframes slide-down {
+          from {
+            opacity: 0;
+            transform: translateY(-30px);
           }
-          to { 
-            opacity: 1; 
-            transform: translateY(0) scale(1) rotate(0); 
+          to {
+            opacity: 1;
+            transform: translateY(0);
           }
-        }
-        
-        .animate-fade-in {
-          animation: fade-in 0.8s ease-out forwards;
         }
 
+        .animate-slide-down {
+          animation: slide-down 0.8s ease-out forwards;
+        }
+
+        .animate-slide-down-delay {
+          animation: slide-down 0.8s ease-out 0.2s forwards;
+          opacity: 0;
+        }
+
+        .animate-slide-down-delay-2 {
+          animation: slide-down 0.8s ease-out 0.4s forwards;
+          opacity: 0;
+        }
+
+        /* Card Entrance Animation */
+        @keyframes card-entrance {
+          0% {
+            opacity: 0;
+            transform: translateY(30px) scale(0.9);
+          }
+          50% {
+            opacity: 0.5;
+            transform: translateY(-5px) scale(1.02);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        .grid > div {
+          animation: card-entrance 0.6s ease-out forwards;
+          opacity: 0;
+        }
+
+        /* Smooth Hover Effects */
         .group {
-          transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         .group:hover {
-          transform: translateY(-1px) scale(1.05) rotate(0deg);
+          transform: translateY(-8px) scale(1.05);
           box-shadow: 
             0 25px 50px -12px rgba(147, 51, 234, 0.25),
-            0 0 30px rgba(59, 130, 246, 0.5),
-            inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            0 0 30px rgba(59, 130, 246, 0.15);
+        }
+
+        /* Floating Animation for Icons */
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-5px);
+          }
+        }
+
+        .group:hover div:first-child {
+          animation: float 2s ease-in-out infinite;
+        }
+
+        /* Pulse Animation for Active Dot */
+        @keyframes pulse {
+          0%, 100% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.1);
+          }
+        }
+
+        .bg-purple-500 {
+          animation: pulse 2s ease-in-out infinite;
         }
       `}</style>
     </div>
