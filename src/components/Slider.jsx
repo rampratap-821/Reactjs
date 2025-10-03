@@ -13,8 +13,7 @@ import slider3 from "../assets/slider3.jpg";
 import slider4 from "../assets/slider4.jpg";
 import slider5 from "../assets/slider6.jpg";
 
-// --- Arrow Components (No change needed here for responsiveness) ---
-
+// --- Arrow Components ---
 const NextArrow = (props) => {
   const { className, style, onClick } = props;
   return (
@@ -23,8 +22,8 @@ const NextArrow = (props) => {
       style={{ ...style, display: "block", right: "30px", zIndex: 10 }}
       onClick={onClick}
     >
-      <div className="w-12 h-12 bg-white/95 rounded-full flex items-center justify-center shadow-xl hover:bg-white hover:shadow-2xl transition-all duration-300 border border-gray-100">
-        <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="w-8 h-8 md:w-12 md:h-12 bg-white/95 rounded-full flex items-center justify-center shadow-xl hover:bg-white hover:shadow-2xl transition-all duration-300 border border-gray-100">
+        <svg className="w-4 h-4 md:w-6 md:h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
       </div>
@@ -40,8 +39,8 @@ const PrevArrow = (props) => {
       style={{ ...style, display: "block", left: "30px", zIndex: 10 }}
       onClick={onClick}
     >
-      <div className="w-12 h-12 bg-white/95 rounded-full flex items-center justify-center shadow-xl hover:bg-white hover:shadow-2xl transition-all duration-300 border border-gray-100">
-        <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="w-8 h-8 md:w-12 md:h-12 bg-white/95 rounded-full flex items-center justify-center shadow-xl hover:bg-white hover:shadow-2xl transition-all duration-300 border border-gray-100">
+        <svg className="w-4 h-4 md:w-6 md:h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
       </div>
@@ -50,7 +49,6 @@ const PrevArrow = (props) => {
 };
 
 // --- Main Slider Component ---
-
 const Slider = () => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -71,7 +69,7 @@ const Slider = () => {
     prevArrow: <PrevArrow />,
     dotsClass: "slick-dots custom-dots",
     appendDots: dots => (
-      <div className="absolute bottom-6 w-full">
+      <div className="absolute bottom-4 md:bottom-6 w-full">
         <ul className="flex justify-center space-x-2">{dots}</ul>
       </div>
     ),
@@ -89,8 +87,6 @@ const Slider = () => {
   };
 
   return (
-    // FIX 1: Removed w-screen and px-1. Now using w-full and no horizontal padding here.
-    // The 4px offset will be handled in CSS on the inner slick-list.
     <div className="relative w-full py-0 overflow-hidden"> 
     
       {loading && (
@@ -110,37 +106,37 @@ const Slider = () => {
         {images.map((img, index) => (
           <div key={index} className="relative">
             
-            {/* The inner image container remains w-full */}
-            <div className="relative overflow-hidden rounded-2xl shadow-xl"> 
+            {/* Image Container */}
+            <div className="relative overflow-hidden rounded-none md:rounded-2xl shadow-xl"> 
               <img
                 src={img}
                 alt={`slider-${index + 1}`}
-                className="w-full h-[450px] object-cover" 
+                className="w-full h-[300px] sm:h-[350px] md:h-[450px] object-cover" 
               />
               
               {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent rounded-2xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent rounded-none md:rounded-2xl"></div>
             </div>
 
-            {/* Input Section - Bottom Left Position (No Change) */}
-            <div className="absolute bottom-8 left-10 max-w-md z-10">
+            {/* Input Section - Fully Responsive */}
+            <div className="absolute bottom-4 left-4 right-4 md:bottom-8 md:left-10 md:right-auto md:max-w-md z-10">
               
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-1 border border-white/20 shadow-2xl">
-                <div className="flex items-stretch rounded-xl overflow-hidden">
+              <div className="bg-white/10 backdrop-blur-md rounded-xl md:rounded-2xl p-1 border border-white/20 shadow-2xl w-full">
+                <div className="flex flex-col sm:flex-row items-stretch rounded-lg md:rounded-xl overflow-hidden">
                   <input
                     type="email"
                     placeholder="Enter your email address..."
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="flex-1 py-3 px-5 bg-white/95 border-none focus:outline-none focus:ring-0 text-gray-800 placeholder-gray-500 text-base font-medium w-64"
+                    className="flex-1 py-2 px-3 sm:py-3 sm:px-4 md:py-3 md:px-5 bg-white/95 border-none focus:outline-none focus:ring-0 text-gray-800 placeholder-gray-500 text-sm sm:text-base font-medium w-full sm:w-auto"
                   />
                   <button
                     onClick={handleSubscribe}
                     disabled={loading}
-                    className="bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-3 hover:from-green-600 hover:to-green-700 transition-all duration-300 disabled:opacity-50 font-semibold text-sm whitespace-nowrap min-w-[120px] flex items-center justify-center shadow-lg"
+                    className="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 sm:px-6 sm:py-3 hover:from-green-600 hover:to-green-700 transition-all duration-300 disabled:opacity-50 font-semibold text-xs sm:text-sm whitespace-nowrap min-w-[100px] sm:min-w-[120px] flex items-center justify-center shadow-lg mt-1 sm:mt-0"
                   >
                     {loading ? (
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <div className="w-3 h-3 sm:w-4 sm:h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                     ) : (
                       "Subscribe"
                     )}
@@ -149,20 +145,20 @@ const Slider = () => {
               </div>
 
               {/* Benefits Text */}
-              <p className="text-white/80 text-xs font-medium mt-3 bg-black/40 px-4 py-2 rounded-lg backdrop-blur-sm max-w-fit">
+              <p className="text-white/80 text-xs font-medium mt-2 bg-black/40 px-3 py-1.5 md:px-4 md:py-2 rounded-lg backdrop-blur-sm w-full sm:w-auto text-center sm:text-left">
                 Get 20% off on your first order
               </p>
             </div>
 
-            {/* Text Content - Top Left (No Change) */}
-            <div className="absolute top-10 left-10 max-w-md z-10">
-              <div className="mb-4">
-                <h2 className="text-4xl font-bold text-white mb-3 leading-tight">
+            {/* Text Content - Responsive */}
+            <div className="absolute top-4 left-4 right-4 md:top-10 md:left-10 md:right-auto md:max-w-md z-10">
+              <div className="mb-2 md:mb-4">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-1 md:mb-3 leading-tight text-center sm:text-left">
                   Fresh Groceries
                   <br />
                   <span className="text-green-300">Delivered Daily</span>
                 </h2>
-                <p className="text-white/90 text-lg font-light">
+                <p className="text-white/90 text-sm sm:text-base md:text-lg font-light text-center sm:text-left">
                   Get the best quality products at your doorstep
                 </p>
               </div>
@@ -173,17 +169,16 @@ const Slider = () => {
 
       {/* Custom CSS for better dots and arrows */}
       <style jsx>{`
-        /* ... (Keep custom dots and arrow styles) ... */
         .custom-dots {
           position: absolute;
-          bottom: 30px;
+          bottom: 20px;
           width: 100%;
         }
         .custom-dots li {
-          margin: 0 6px;
+          margin: 0 4px;
         }
         .custom-dots li button:before {
-          font-size: 12px;
+          font-size: 10px;
           color: white;
           opacity: 0.6;
           transition: all 0.3s ease;
@@ -191,7 +186,7 @@ const Slider = () => {
         .custom-dots li.slick-active button:before {
           opacity: 1;
           color: #10B981;
-          font-size: 14px;
+          font-size: 12px;
         }
         .custom-dots li button:hover:before {
           opacity: 0.8;
@@ -209,10 +204,32 @@ const Slider = () => {
           transform: translateY(-50%) scale(1.05);
         }
         .next-arrow {
-          right: 35px !important;
+          right: 15px !important;
         }
         .prev-arrow {
-          left: 35px !important;
+          left: 15px !important;
+        }
+        
+        /* Responsive arrow positioning */
+        @media (min-width: 768px) {
+          .next-arrow {
+            right: 35px !important;
+          }
+          .prev-arrow {
+            left: 35px !important;
+          }
+          .custom-dots {
+            bottom: 30px;
+          }
+          .custom-dots li {
+            margin: 0 6px;
+          }
+          .custom-dots li button:before {
+            font-size: 12px;
+          }
+          .custom-dots li.slick-active button:before {
+            font-size: 14px;
+          }
         }
         
         /* Hide default slick arrows */
@@ -233,9 +250,9 @@ const Slider = () => {
           display: none;
         }
         
-        /* FIX 2: Apply 4px margin to the slick-list instead of padding on the main wrapper */
+        /* Apply margin to the slick-list */
         .slick-slider .slick-list {
-          margin: 0 4px !important; /* This creates the 4px left/right gap */
+          margin: 0 4px !important;
         }
         
         /* Ensure slick-slider padding is zero */
@@ -246,10 +263,9 @@ const Slider = () => {
 
       {/* Additional inline style for arrow positioning and Global Scrollbar Fix */}
       <style jsx global>{`
-        /* FIX 3: Global fix to forcefully prevent horizontal scrollbar on the entire page */
         html, body {
-          overflow-x: hidden !important; 
-          margin: 0; /* Ensures no default body margin adds to the width */
+          overflow-x: hidden !important;
+          margin: 0;
           padding: 0;
         }
         
@@ -260,9 +276,8 @@ const Slider = () => {
         .slick-slider .slick-arrow:hover {
           background: transparent;
         }
-        /* Overriding the previous margin/padding to support full width */
+        
         .slick-slider .slick-list {
-          /* This is managed by the scoped CSS now */
           margin: 0 !important; 
         }
         .slick-slider {

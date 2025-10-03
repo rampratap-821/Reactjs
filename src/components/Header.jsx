@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+
+import AccountUser from '../pages/AccountUser';
+import Card from './Card';
+
 const Header = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isCategoryOpen, setIsCategoryOpen] = useState(false); 
     const [isBrowseOpen, setIsBrowseOpen] = useState(false); 
     const [isHomeDropdownOpen, setIsHomeDropdownOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
-    
+    const [isCartOpen, setIsCartOpen] = useState(false);
+    const [isAccountDrawerOpen, setIsAccountDrawerOpen] = useState(false);
+
     // Handle scroll effect
     useEffect(() => {
         const handleScroll = () => {
@@ -34,10 +40,30 @@ const Header = () => {
         "Home Page (RTL)",
     ];
 
+    // Improved cart dropdown handlers
+    const handleCartMouseEnter = () => {
+        setIsCartOpen(true);
+    };
+
+    const handleCartMouseLeave = () => {
+        // Small delay to allow moving to dropdown
+        setTimeout(() => {
+            setIsCartOpen(false);
+        }, 100);
+    };
+
+    const handleDropdownMouseEnter = () => {
+        setIsCartOpen(true);
+    };
+
+    const handleDropdownMouseLeave = () => {
+        setIsCartOpen(false);
+    };
+
     return (
-        <header className="sticky top-0 z-50">
+        <header className="sticky top-0 z-40"> {/* Reduced z-index for header */}
             
-            {/* Top Bar - Always visible but with scroll effect */}
+            {/* Top Bar */}
             <div className={`hidden lg:block transition-all duration-300 ${
                 isScrolled ? 'bg-white shadow-md py-1' : 'bg-gray-100 border-b border-gray-200 py-2'
             }`}>
@@ -73,7 +99,7 @@ const Header = () => {
                 </div>
             </div>
 
-            {/* Main Header - Sticky with shadow on scroll */}
+            {/* Main Header */}
             <div className={`bg-white border-b border-gray-200 transition-all duration-300 ${
                 isScrolled ? 'py-3 shadow-lg' : 'py-4'
             }`}>
@@ -85,7 +111,7 @@ const Header = () => {
                         <span className="text-gray-900 font-semibold text-sm hidden sm:block">MART & GROCERY</span>
                     </Link>
 
-                    {/* Search Bar with Dropdown (Hidden on mobile) */}
+                    {/* Search Bar with Dropdown */}
                     <div className="hidden lg:flex flex-grow max-w-xl mx-8 border border-green-600 rounded-md overflow-visible relative">
                         
                         {/* Dropdown Button / Area */}
@@ -151,20 +177,44 @@ const Header = () => {
 
                         {/* User Profile */}
                         <div className="flex flex-col items-center group cursor-pointer">
-                            <div className="text-xl text-gray-600 group-hover:text-green-600 transition-colors">👨‍🌾</div>
+                            <button 
+                                onClick={() => setIsAccountDrawerOpen(true)}
+                                className="text-xl text-gray-600 group-hover:text-green-600 transition-colors"
+                            >
+                                👨‍🌾
+                            </button>
                             <span className="text-xs text-gray-500 group-hover:text-green-600 transition-colors">Profile</span>
                         </div>
 
-                        {/* Cart */}
-                        <div className="flex flex-col items-center group cursor-pointer relative">
+                        {/* Cart - IMPROVED WITH BETTER HANDLERS */}
+                        <div 
+                            className="flex flex-col items-center group cursor-pointer relative"
+                            onMouseEnter={handleCartMouseEnter}
+                            onMouseLeave={handleCartMouseLeave}
+                        >
                             <div className="text-xl text-gray-600 group-hover:text-green-600 transition-colors">🛒</div>
                             <span className="text-xs text-gray-500 group-hover:text-green-600 transition-colors">Cart</span>
                             <div className="absolute -top-1 -right-1 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full">3</div>
+                            
+                            {/* Cart Dropdown with improved positioning */}
+                            {isCartOpen && (
+                                <div className="absolute right-0 top-full mt-2 z-50">
+                                    <Card
+                                        onMouseEnter={handleDropdownMouseEnter}
+                                        onMouseLeave={handleDropdownMouseLeave}
+                                    />
+                                </div>
+                            )}
                         </div>
                         
                         {/* Account */}
                         <div className="flex flex-col items-center group cursor-pointer hidden sm:flex">
-                            <div className="text-xl text-gray-600 group-hover:text-green-600 transition-colors">👤</div>
+                            <button 
+                                onClick={() => setIsAccountDrawerOpen(true)}
+                                className="text-xl text-gray-600 group-hover:text-green-600 transition-colors"
+                            >
+                                👤
+                            </button>
                             <span className="text-xs text-gray-500 group-hover:text-green-600 transition-colors">Account</span>
                         </div>
 
@@ -187,7 +237,7 @@ const Header = () => {
                 </div>
             </div>
 
-            {/* Navigation Bar (Menu Links & Support) - Sticky */}
+            {/* Navigation Bar */}
             <div className={`hidden lg:block bg-white border-t border-gray-100 transition-all duration-300 ${
                 isScrolled ? 'shadow-md' : 'shadow-sm'
             }`}>
@@ -301,11 +351,25 @@ const Header = () => {
                             <Link to="/deals" className="text-gray-700 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium text-center border" onClick={() => setIsMobileMenuOpen(false)}>Deals</Link>
                             <Link to="/categories" className="text-gray-700 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium text-center border" onClick={() => setIsMobileMenuOpen(false)}>Categories</Link>
                             <Link to="/aboutPage" className="text-gray-700 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium text-center border" onClick={() => setIsMobileMenuOpen(false)}>About</Link>
-                            <Link to="/account" className="text-gray-700 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium text-center border" onClick={() => setIsMobileMenuOpen(false)}>Account</Link>
+                            <button 
+                                onClick={() => {
+                                    setIsMobileMenuOpen(false);
+                                    setIsAccountDrawerOpen(true);
+                                }}
+                                className="text-gray-700 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium text-center border"
+                            >
+                                Account
+                            </button>
                         </div>
                     </div>
                 </div>
             )}
+
+            {/* Account Drawer */}
+            <AccountUser 
+                isOpen={isAccountDrawerOpen}
+                onClose={() => setIsAccountDrawerOpen(false)}
+            />
         </header>
     );
 };

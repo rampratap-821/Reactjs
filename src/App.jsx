@@ -15,7 +15,7 @@ function App() {
     <>
       <Header />
       <Routes>
-        {/* ✅ Home page पर Slider, Categories और PopularProducts दिखाएं */}
+        {/* ✅ Home page पर सभी components दिखाएं */}
         <Route path="/" element={
           <div>
             <Slider />
@@ -38,10 +38,14 @@ function App() {
         <Route path="/alldatapages" element={<Alldatapages />} />
         <Route path="/simpleimage" element={<Simpleimage />} />
         <Route path="/footerPages" element={<FooterPages/>} />
-
-
-
-
+        
+        {/* Account related routes */}
+        <Route path="/account" element={<div>My Account Page</div>} />
+        <Route path="/orders" element={<div>My Orders Page</div>} />
+        <Route path="/wishlist" element={<div>Wishlist Page</div>} />
+        <Route path="/tracking" element={<div>Order Tracking Page</div>} />
+        <Route path="/settings" element={<div>Settings Page</div>} />
+        {/* ... other routes */}
       </Routes>
     </>
   );
