@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Star, Heart, Eye, Shuffle, ChevronLeft, ChevronRight } from 'lucide-react'
-import Dealspages from './Dealspages';
+
 
 function DailyBestSells() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -125,7 +125,7 @@ function DailyBestSells() {
 
   return (
     <div className="bg-white py-16">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-10xl mx-auto px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">Daily Best Sells</h2>
@@ -334,7 +334,7 @@ function DailyBestSells() {
     
 
       </div>
-       <Dealspages />
+      
      
     </div>
   );

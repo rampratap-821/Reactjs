@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PopularProducts from "./PopularProducts";
 
 // Categories data - 20 cards
 const categories = [
@@ -111,8 +110,7 @@ function Categories() {
         </div>
       </div>
 
-      {/* Popular Products Section */}
-      <PopularProducts />
+      {/* ❌ Popular Products Section को यहाँ से हटा दिया गया */}
 
       {/* Custom Animations */}
       <style jsx>{`

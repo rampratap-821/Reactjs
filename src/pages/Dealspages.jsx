@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import Alldatapages from './Alldatapages'
+
 
 function Dealspages() {
   const [counters, setCounters] = useState({})
@@ -120,7 +120,7 @@ function Dealspages() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-10xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
         Puspendra Singh Deals Pages
       </h1>
@@ -229,7 +229,7 @@ function Dealspages() {
           </div>
         ))}
       </div>
-      <Alldatapages/>
+     
     </div>
   )
 }

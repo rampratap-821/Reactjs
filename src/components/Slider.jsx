@@ -11,7 +11,6 @@ import slider2 from "../assets/slider2.jpg";
 import slider3 from "../assets/slider3.jpg";
 import slider4 from "../assets/slider4.jpg";
 import slider5 from "../assets/slider6.jpg";
-import Categories from "../pages/Categories";
 
 const NextArrow = (props) => {
   const { className, style, onClick } = props;
@@ -163,7 +162,8 @@ const Slider = () => {
           </div>
         ))}
       </SlickSlider>
-      <Categories/>
+
+      {/* ❌ Categories को यहाँ से हटा दिया गया */}
 
       {/* Custom CSS for better dots and hide scrollbar */}
       <style jsx>{`

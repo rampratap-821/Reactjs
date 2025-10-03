@@ -40,17 +40,16 @@ function Alldatapages() {
     </div>
   );
 
-  // 🛒 Product Card
   const ProductCard = ({ product }) => (
-    <div className="flex items-center gap-4 p-4 bg-white rounded-xl transition-transform duration-200 hover:scale-105 shadow-md hover:shadow-lg">
-      {/* Emoji instead of image */}
-      <div className="w-20 h-20 flex items-center justify-center text-4xl border rounded-lg bg-gray-50">
+    <div className="w-full h-42 flex items-center gap-4 p-4 bg-white rounded-xl transition-all duration-300 hover:scale-105 shadow-md hover:shadow-xl border border-gray-100">
+      {/* Emoji container with better styling */}
+      <div className="w-20 h-20 flex items-center justify-center text-5xl border-2 border-green-100 rounded-xl bg-green-50 shadow-sm">
         {product.image}
       </div>
       <div className="flex-1">
-        <h3 className="font-semibold text-gray-800 text-base line-clamp-2">{product.name}</h3>
+        <h3 className="font-semibold text-gray-800 text-base line-clamp-2 mb-2">{product.name}</h3>
         <StarRating rating={product.rating} />
-        <div className="flex items-center gap-2 mt-2">
+        <div className="flex items-center gap-2 mt-3">
           <span className="text-green-600 font-bold text-lg">{product.currentPrice}</span>
           <span className="text-gray-400 line-through text-sm">{product.originalPrice}</span>
         </div>
@@ -60,11 +59,11 @@ function Alldatapages() {
 
   // 📦 Section
   const ProductSection = ({ title, products }) => (
-    <div>
-      <h2 className="text-xl font-bold text-gray-900 border-b-2 border-green-500 inline-block mb-5">
+    <div className="w-full">
+      <h2 className="text-xl font-bold text-gray-900 border-b-2 border-green-500 inline-block mb-6 pb-1">
         {title}
       </h2>
-      <div className="space-y-4">
+      <div className="space-y-5">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
@@ -73,13 +72,15 @@ function Alldatapages() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10 px-6">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div className="mix-h-screen bg-gray-50 py-10 px-4">
+      <div className="w-full mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         <ProductSection title="Top Selling" products={products.topSelling} />
         <ProductSection title="Trending Products" products={products.trending} />
         <ProductSection title="Recently Added" products={products.recentlyAdded} />
         <ProductSection title="Top Rated" products={products.topRated} />
       </div>
+
+    
     </div>
   );
 }

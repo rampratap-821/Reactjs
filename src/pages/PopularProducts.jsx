@@ -1,6 +1,6 @@
 import React from 'react'
 import { Star, Heart, Eye, Shuffle } from 'lucide-react'
-import DailyBestSells from './DailyBestSells';
+
 
 function PopularProducts() {
   const products = [
@@ -273,7 +273,7 @@ function PopularProducts() {
         
        
       </div>
-      <DailyBestSells/>
+     
 
       
     </div>
